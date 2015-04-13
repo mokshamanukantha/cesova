@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ColorPrimary"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.android.cesova.Gauges.CustomGauge
+                android:id="@+id/gaugeThrottle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                app:endValue="100"
+                app:pointEndColor="@color/White"
+                app:pointStartColor="@color/White"
+                app:startAngel="135"
+                app:startValue="0"
+                app:strokeCap="ROUND"
+                app:strokeColor="@color/DarkGray"
+                app:strokeWidth="7dp"
+                app:sweepAngel="270" />
+
+            <com.android.cesova.Gauges.CustomGauge
+                android:id="@+id/gaugeEngLoad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                app:endValue="100"
+                app:pointEndColor="@color/White"
+                app:pointStartColor="@color/White"
+                app:startAngel="135"
+                app:startValue="0"
+                app:strokeCap="ROUND"
+                app:strokeColor="@color/DarkGray"
+                app:strokeWidth="7dp"
+                app:sweepAngel="270" />
+
+            <com.android.cesova.Gauges.CustomGauge
+                android:id="@+id/gaugeBaro"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                app:endValue="17000"
+                app:pointEndColor="@color/White"
+                app:pointStartColor="@color/White"
+                app:startAngel="135"
+                app:startValue="0"
+                app:strokeCap="ROUND"
+                app:strokeColor="@color/DarkGray"
+                app:strokeWidth="7dp"
+                app:sweepAngel="270" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtThrottle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/txtEngineLoad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/txtBaro"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:paddingBottom="10dp"
+                android:text="Throttle"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:paddingBottom="10dp"
+                android:text="Engine Load"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:paddingBottom="10dp"
+                android:text="Engine RPM"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.android.cesova.Gauges.CustomGauge
+                android:id="@+id/gaugeEngineTemp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                app:endValue="17000"
+                app:pointEndColor="@color/White"
+                app:pointStartColor="@color/White"
+                app:startAngel="135"
+                app:startValue="0"
+                app:strokeCap="ROUND"
+                app:strokeColor="@color/DarkGray"
+                app:strokeWidth="7dp"
+                app:sweepAngel="270" />
+
+            <com.android.cesova.Gauges.CustomGauge
+                android:id="@+id/gaugeMani"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                app:endValue="17000"
+                app:pointEndColor="@color/White"
+                app:pointStartColor="@color/White"
+                app:startAngel="135"
+                app:startValue="0"
+                app:strokeCap="ROUND"
+                app:strokeColor="@color/DarkGray"
+                app:strokeWidth="7dp"
+                app:sweepAngel="270" />
+
+            <com.android.cesova.Gauges.CustomGauge
+                android:id="@+id/gaugeFuelLevel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                app:endValue="17000"
+                app:pointEndColor="@color/White"
+                app:pointStartColor="@color/White"
+                app:startAngel="135"
+                app:startValue="0"
+                app:strokeCap="ROUND"
+                app:strokeColor="@color/DarkGray"
+                app:strokeWidth="7dp"
+                app:sweepAngel="270" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtengineTemp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/txtMani"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/txtFuelLevel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:paddingBottom="10dp"
+                android:text="Mass Air Flow"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:paddingBottom="10dp"
+                android:text="Manifold pressure"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:paddingBottom="10dp"
+                android:text="Fuel Level"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

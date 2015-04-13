@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Enable Upload">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefEnbUpload"
+            android:summary="Disable http data upload"
+            android:title="Enable Data Upload"></CheckBoxPreference>
+
+
+        <EditTextPreference
+            android:key="prefUploadURL"
+            android:summary="Post URL that will accept real time data"
+            android:title="Upload_URL" />
+
+
+        <EditTextPreference
+            android:key="prefVehicleID"
+            android:summary="Optional unique ID of the vehicle "
+            android:title="Vehicle ID" />
+
+        <EditTextPreference
+            android:key="prefBluetoothDevice"
+            android:summary="List of paired bluetooth devices"
+            android:title="Bluetooth Device" />
+
+        <ListPreference
+            android:entries="@array/OBDprotocol"
+            android:entryValues="@array/OBDprotocolValues"
+            android:key="prefOBDprotocol"
+            android:summary="Select ODB protocol to use"
+            android:title="OBD protocol" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefSetImpUnits"
+            android:summary="Imperial Units"
+            android:title="Enable Imperial Units"></CheckBoxPreference>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="setGPS"
+            android:summary="Turn on GPS"
+            android:title="Enable GPS"></CheckBoxPreference>
+
+        <EditTextPreference
+            android:key="prdUpdate"
+            android:summary="The lenght of time between query vehicle in seconds"
+            android:title="Update Period in seconds" />
+
+        <EditTextPreference
+            android:key="fuelEconomy"
+            android:summary="Any fuel value larger than this thrown out "
+            android:title="Maximum fuel economy" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="OBDprotocol">
+        <item name="1">Auto</item>
+        <item name="2">OBD_user_01</item>
+        <item name="3">OBD_user_02</item>
+        <item name="4">OBD_user_03)</item>
+    </string-array>
+    <string-array name="OBDprotocolValues">
+        <item name="1"></item>
+        <item name="2">Cx001-knw0001</item>
+        <item name="3">Rx001-knw0003</item>
+        <item name="4">Sx001-knw0004</item>
+    </string-array>
+
+</resources>
