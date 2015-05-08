@@ -15,6 +15,7 @@ public class ActivitySelectGraph extends Activity {
 
     private Button btnSelectAccGraph;
     private Button btnSelectVoltGraph;
+    private Button btnGraphing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class ActivitySelectGraph extends Activity {
 
         btnSelectAccGraph = (Button) findViewById(R.id.accGraph);
         btnSelectVoltGraph = (Button) findViewById(R.id.button);
+        btnGraphing = (Button) findViewById(R.id.graphing);
 
         btnSelectAccGraph.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +46,13 @@ public class ActivitySelectGraph extends Activity {
             }
         });
 
-
+        btnGraphing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent3 = new Intent(ActivitySelectGraph.this, GraphActivity.class);
+                startActivity(intent3);
+            }
+        });
     }
 
 

@@ -82,8 +82,6 @@ public class ActivityGraphing extends Activity implements SensorEventListener,
             double x = event.values[0];
             double y = event.values[1];
             double z = event.values[2];
-
-
             final double alpha = 0.8;
 
 
@@ -198,16 +196,8 @@ public class ActivityGraphing extends Activity implements SensorEventListener,
             multiRenderer.setLabelsTextSize(15);
             multiRenderer.setMarginsColor(Color.WHITE);
             // Getting a reference to LinearLayout of the MainActivity Layout
-
-
-            // Creating a Line Chart
+            
             mChart = ChartFactory.getLineChartView(getBaseContext(), dataset, multiRenderer);
-
-            // mChart=ChartFactory.getBubbleChartView(getBaseContext(),dataset,multiRenderer);
-
-            //mChart=ChartFactory.getScatterChartView(getBaseContext(),dataset,multiRenderer);
-
-
             layout.addView(mChart);
 
         }
