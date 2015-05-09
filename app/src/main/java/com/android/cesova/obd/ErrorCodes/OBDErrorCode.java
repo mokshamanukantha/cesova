@@ -12,9 +12,52 @@ public class OBDErrorCode {
     public static final String KEY_TYPE = "type";
     public static final String KEY_DESCRIPTION = "description";
 
+    public static final String KEY_SYMPTOMS = "symptom";
+    public static final String KEY_CAUSES = "cause";
+    public static final String KEY_SOLUTIONS = "solution";
+    public static final String KEY_RELATED = "related";
+
+
     public static String pid;
     public static String type;
     public static String description;
+
+    public static String symptom;
+    public static String cause;
+    public static String solution;
+    public static String related;
+
+    public static String getSymptom() {
+        return symptom;
+    }
+
+    public static void setSymptom(String symptom) {
+        OBDErrorCode.symptom = symptom;
+    }
+
+    public static String getCause() {
+        return cause;
+    }
+
+    public static void setCause(String cause) {
+        OBDErrorCode.cause = cause;
+    }
+
+    public static String getSolution() {
+        return solution;
+    }
+
+    public static void setSolution(String solution) {
+        OBDErrorCode.solution = solution;
+    }
+
+    public static String getRelated() {
+        return related;
+    }
+
+    public static void setRelated(String related) {
+        OBDErrorCode.related = related;
+    }
 
     public String getPid() {
         return pid;

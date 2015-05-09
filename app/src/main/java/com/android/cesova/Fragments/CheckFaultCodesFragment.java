@@ -1,9 +1,9 @@
 package com.android.cesova.Fragments;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,19 +106,6 @@ public class CheckFaultCodesFragment extends Fragment {
                 }
             }
         });
-       /* btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OBDErrorCodeManager obdErrorCodeManager = new OBDErrorCodeManager(getActivity());
-                OBDErrorCode obd = new OBDErrorCode();
-
-                OBDErrorCode res = obdErrorCodeManager.getOBDErrorCodeById("P0020");
-                Toast toast = Toast.makeText(getActivity(), " results " + res.getPid() + " " + res.getType() + " " + res.getDescription(), Toast.LENGTH_SHORT);
-                toast.show();
-
-
-            }
-        });*/
     }
 
     @Override
@@ -160,105 +147,8 @@ public class CheckFaultCodesFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
         return obdList;
-    }              /*obd.pid = "P0001";
-                obd.type = "Generic";
-                obd.description = "Fuel volume regulator control -circuit open";
-                obdErrorCodeManager.insert(obd);
 
-                obd.pid = "P0002";
-                obd.type = "Generic";
-                obd.description = "Fuel volume regulator control -circuit range/ performance";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0003";
-                obd.type = "Generic";
-                obd.description = "Fuel volume regulator control -circuit low";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0004";
-                obd.type = "Generic";
-                obd.description = "Fuel volume regulator control -circuit high";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0005";
-                obd.type = "Generic";
-                obd.description = "Fuel shut-off valve control -circuit open";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0006";
-                obd.type = "Generic";
-                obd.description = "Fuel shut-off valve control -circuit low";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0007";
-                obd.type = "Generic";
-                obd.description = "Fuel shut-off valve control -circuit high";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0008";
-                obd.type = "Generic";
-                obd.description = "Engine position system, bank 1 -performance";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0009";
-                obd.type = "Generic";
-                obd.description = "Engine position system, bank 2 -performance";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0010";
-                obd.type = "Generic";
-                obd.description = "Camshaft position (CMP)·actuator, intake/left/front, bank 1 -circuit malfunction";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0011";
-                obd.type = "Generic";
-                obd.description = "Camshaft position (CMP), intake/left/front, bank 1 -timing over-advanced/system performance";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0012";
-                obd.type = "Generic";
-                obd.description = "Camshaft position (CMP) actuator, intake/left/front, bank 1 -circuit malfunction";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0013";
-                obd.type = "Generic";
-                obd.description = "Camshaft position (CMP) actuator, exhaust!right! rear, bank 1 -timing over-advanced/system performance";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0014";
-                obd.type = "Generic";
-                obd.description = "Crankshaft position/camshaft position, bank 1 sensor A -correlation";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0015";
-                obd.type = "Generic";
-                obd.description = "Crankshaft position/camshaft position, bank 1 sensor B -correlation";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0016";
-                obd.type = "Generic";
-                obd.description = "Crankshaft position/camshaft position, bank 2 sensor A -correlation";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0017";
-                obd.type = "Generic";
-                obd.description = "Crankshaft position/camshaft position, bank 2 sensor B -correlation";
-                obdErrorCodeManager.insert(obd);
+    }
 
 
-                obd.pid = "P0018";
-                obd.type = "Generic";
-                obd.description = "Camshaft position (CMP) actuator, intake/left/front, bank 2 -circuit malfunction";
-                obdErrorCodeManager.insert(obd);
-
-
-                obd.pid = "P0019";
-                obd.type = "Generic";
-                obd.description = "Camshaft position (CMP), intake/left/front, bank 2 -timing over-advanced/system performance";
-                obdErrorCodeManager.insert(obd);
-
-                obd.pid = "P0020";
-                obd.type = "Generic";
-                obd.description = "Camshaft position (CMP), intake/left/front, bank 2 -timing over-retarded";
-                obdErrorCodeManager.insert(obd);*/
 }

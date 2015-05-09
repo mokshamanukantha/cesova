@@ -28,6 +28,11 @@ public class OBDErrorCodeManager {
         values.put(OBDErrorCode.KEY_TYPE, OBDErrorCode.type);
         values.put(OBDErrorCode.KEY_DESCRIPTION, OBDErrorCode.description);
 
+        values.put(OBDErrorCode.KEY_SYMPTOMS, OBDErrorCode.symptom);
+        values.put(OBDErrorCode.KEY_CAUSES, OBDErrorCode.cause);
+        values.put(OBDErrorCode.KEY_SOLUTIONS, OBDErrorCode.solution);
+        values.put(OBDErrorCode.KEY_RELATED, OBDErrorCode.related);
+
         // Inserting Row
         long OBDErrorCode_Id = db.insert(OBDErrorCode.TABLE, null, values);
         db.close(); // Closing database connection
@@ -47,9 +52,14 @@ public class OBDErrorCodeManager {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(com.android.cesova.obd.ErrorCodes.OBDErrorCode.KEY_PID, com.android.cesova.obd.ErrorCodes.OBDErrorCode.pid);
-        values.put(com.android.cesova.obd.ErrorCodes.OBDErrorCode.KEY_TYPE, com.android.cesova.obd.ErrorCodes.OBDErrorCode.type);
-        values.put(com.android.cesova.obd.ErrorCodes.OBDErrorCode.KEY_DESCRIPTION, com.android.cesova.obd.ErrorCodes.OBDErrorCode.description);
+        values.put(OBDErrorCode.KEY_PID, OBDErrorCode.pid);
+        values.put(OBDErrorCode.KEY_TYPE, OBDErrorCode.type);
+        values.put(OBDErrorCode.KEY_DESCRIPTION, OBDErrorCode.description);
+
+        values.put(OBDErrorCode.KEY_SYMPTOMS, OBDErrorCode.symptom);
+        values.put(OBDErrorCode.KEY_CAUSES, OBDErrorCode.cause);
+        values.put(OBDErrorCode.KEY_SOLUTIONS, OBDErrorCode.solution);
+        values.put(OBDErrorCode.KEY_RELATED, OBDErrorCode.related);
 
         db.update(com.android.cesova.obd.ErrorCodes.OBDErrorCode.TABLE, values, com.android.cesova.obd.ErrorCodes.OBDErrorCode.KEY_PID + "=" + OBDErrorCode, null);
         db.close(); // Closing database connection
@@ -118,7 +128,11 @@ public class OBDErrorCodeManager {
         String selectQuery = "SELECT  " +
                 OBDErrorCode.KEY_PID + "," +
                 OBDErrorCode.KEY_TYPE + "," +
-                OBDErrorCode.KEY_DESCRIPTION +
+                OBDErrorCode.KEY_DESCRIPTION + "," +
+                OBDErrorCode.KEY_SYMPTOMS + "," +
+                OBDErrorCode.KEY_CAUSES + "," +
+                OBDErrorCode.KEY_SOLUTIONS + "," +
+                OBDErrorCode.KEY_RELATED +
                 " FROM " + OBDErrorCode.TABLE
                 + " WHERE " +
                 OBDErrorCode.KEY_PID + "=" + Id;
@@ -133,9 +147,14 @@ public class OBDErrorCodeManager {
 
         if (cursor.moveToFirst()) {
             do {
-                com.android.cesova.obd.ErrorCodes.OBDErrorCode.pid = cursor.getString(cursor.getColumnIndex(com.android.cesova.obd.ErrorCodes.OBDErrorCode.KEY_PID));
-                com.android.cesova.obd.ErrorCodes.OBDErrorCode.type = cursor.getString(cursor.getColumnIndex(com.android.cesova.obd.ErrorCodes.OBDErrorCode.KEY_TYPE));
-                com.android.cesova.obd.ErrorCodes.OBDErrorCode.description = cursor.getString(cursor.getColumnIndex(com.android.cesova.obd.ErrorCodes.OBDErrorCode.KEY_DESCRIPTION));
+                OBDErrorCode.pid = cursor.getString(cursor.getColumnIndex(OBDErrorCode.KEY_PID));
+                OBDErrorCode.type = cursor.getString(cursor.getColumnIndex(OBDErrorCode.KEY_TYPE));
+                OBDErrorCode.description = cursor.getString(cursor.getColumnIndex(OBDErrorCode.KEY_DESCRIPTION));
+
+                OBDErrorCode.symptom = cursor.getString(cursor.getColumnIndex(OBDErrorCode.KEY_SYMPTOMS));
+                OBDErrorCode.cause = cursor.getString(cursor.getColumnIndex(OBDErrorCode.KEY_CAUSES));
+                OBDErrorCode.solution = cursor.getString(cursor.getColumnIndex(OBDErrorCode.KEY_SOLUTIONS));
+                OBDErrorCode.related = cursor.getString(cursor.getColumnIndex(OBDErrorCode.KEY_RELATED));
 
             } while (cursor.moveToNext());
         }

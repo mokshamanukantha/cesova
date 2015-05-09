@@ -25,11 +25,13 @@ public class DBHelper extends SQLiteOpenHelper {
         String CREATE_TABLE_ERRORCODES = "CREATE TABLE " + OBDErrorCode.TABLE + "("
                 + OBDErrorCode.KEY_PID + " TEXT PRIMARY KEY ,"
                 + OBDErrorCode.KEY_TYPE + " TEXT, "
-                + OBDErrorCode.KEY_DESCRIPTION + " TEXT)";
+                + OBDErrorCode.KEY_DESCRIPTION + " TEXT, "
+                + OBDErrorCode.KEY_SYMPTOMS + " TEXT, "
+                + OBDErrorCode.KEY_CAUSES + " TEXT, "
+                + OBDErrorCode.KEY_SOLUTIONS + " TEXT, "
+                + OBDErrorCode.KEY_RELATED + " TEXT)";
         db.execSQL(CREATE_TABLE_ERRORCODES);
-
         Log.d("Database Path", db.getPath());
-
     }
 
 
@@ -39,7 +41,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + OBDErrorCode.TABLE);
         // Create tables again
         onCreate(db);
-
     }
 
 }

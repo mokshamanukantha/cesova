@@ -217,12 +217,9 @@ public class MainActivity extends SampleActivityBase {
     }
 
     private void connectDevice(Intent data, boolean secure) {
-        // Get the device MAC address
         String address = data.getExtras()
                 .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-        // Get the BluetoothDevice object
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-        // Attempt to connect to the device
         conector = new BluetoothConnector(device, secure, mBluetoothAdapter, null);
         try {
             bluSocket = conector.connect();
@@ -267,12 +264,6 @@ public class MainActivity extends SampleActivityBase {
                 e.printStackTrace();
             }
         }
-        /*try {
-            tr.run(socket.getInputStream(),socket.getOutputStream());
-            Log.d("Trouble Codes",tr.getFormattedResult());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void setStatus(int resId) {
@@ -316,28 +307,12 @@ public class MainActivity extends SampleActivityBase {
             transaction.replace(R.id.content_frame, fragmentRealTimeInformation);
             transaction.commit();
         } else if (position == 2) {
-            manager = getFragmentManager();
-            transaction = manager.beginTransaction();
-            fragmentCheckFaultCodes = new CheckFaultCodesFragment();
-            transaction.addToBackStack(String.valueOf(fragmentCheckFaultCodes));
-            transaction.replace(R.id.content_frame, fragmentCheckFaultCodes);
-            transaction.commit();
+            Intent i = new Intent(this, CheckFaultCodeMain.class);
+            startActivity(i);
         } else if (position == 3) {
-            /*manager = getFragmentManager();
-            transaction = manager.beginTransaction();
-            fragmentGrphing = new GraphingFragment();
-            transaction.addToBackStack(String.valueOf(fragmentGrphing));
-            transaction.replace(R.id.content_frame, fragmentGrphing);
-            transaction.commit();*/
             Intent i = new Intent(this, ActivitySelectGraph.class);
             startActivity(i);
         } else if (position == 4) {
-            /*manager = getFragmentManager();
-            transaction = manager.beginTransaction();
-            fragmentMapView = new MapViewFragment();
-            transaction.addToBackStack(String.valueOf(fragmentMapView));
-            transaction.replace(R.id.content_frame, fragmentMapView);
-            transaction.commit();*/
             Intent i = new Intent(this, MapActivity.class);
             startActivity(i);
         } else if (position == 5) {
@@ -390,13 +365,4 @@ public class MainActivity extends SampleActivityBase {
             changeLayout(position);
         }
     }
-
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        manager = getFragmentManager();
-        transaction = manager.beginTransaction();
-        transaction.replace(R.id.content_frame, getFragmentManager().findFragmentByTag(String.valueOf(getFragmentManager().getBackStackEntryAt(MainActivity.this.getFragmentManager().getBackStackEntryCount() - 1).getName())));
-        transaction.commit();
-    }*/
 }
