@@ -19,7 +19,7 @@ import com.android.cesova.obd.exceptions.NoDataException;
 
 import java.io.IOException;
 
-/**
+ /**
  * Created by mokshaDev on 5/9/2015.
  */
 public class TemperatureFragment extends Fragment {
@@ -65,7 +65,7 @@ public class TemperatureFragment extends Fragment {
                 try {
                     //ambientAirTemperature.run(socket.getInputStream(), socket.getOutputStream());
                     //airTemperature.run(socket.getInputStream(), socket.getOutputStream());
-                    engineCoolantTemperature.run(socket.getInputStream(),socket.getOutputStream());
+                    engineCoolantTemperature.run(socket.getInputStream(), socket.getOutputStream());
 
                     //airIntakeTemp.setText("" + airTemperature.getFormattedResult());
                     //ambientTemp.setText("" + ambientAirTemperature.getFormattedResult());

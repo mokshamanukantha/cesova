@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,7 +32,6 @@ import com.android.cesova.Fragments.SettingsFragment;
 import com.android.cesova.Fragments.TestResultsFragment;
 import com.android.cesova.GlobalClass;
 import com.android.cesova.R;
-import com.android.cesova.common.activities.SampleActivityBase;
 import com.android.cesova.obd.commands.ObdCommand;
 import com.android.cesova.obd.commands.protocol.EchoOffObdCommand;
 import com.android.cesova.obd.commands.protocol.LineFeedOffObdCommand;
@@ -41,7 +41,9 @@ import com.android.cesova.obd.enums.ObdProtocols;
 
 import java.io.IOException;
 
-public class MainActivity extends SampleActivityBase {
+public class MainActivity extends ActionBarActivity {
+    public static final String TAG = "MainActivity";
+
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
