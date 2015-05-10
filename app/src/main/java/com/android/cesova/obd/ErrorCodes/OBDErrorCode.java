@@ -27,6 +27,17 @@ public class OBDErrorCode {
     public static String solution;
     public static String related;
 
+    public OBDErrorCode()
+    {
+
+    }
+
+    public OBDErrorCode(String pid,String type,String description)
+    {
+        this.setPid(pid);
+        this.setType(type);
+        this.setDescription(description);
+    }
     public static String getSymptom() {
         return symptom;
     }

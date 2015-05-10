@@ -135,9 +135,9 @@ public class OBDErrorCodeManager {
                 OBDErrorCode.KEY_RELATED +
                 " FROM " + OBDErrorCode.TABLE
                 + " WHERE " +
-                OBDErrorCode.KEY_PID + "=" + Id;
+                OBDErrorCode.KEY_PID + " = " + Id;
 
-        String query = "SELECT pid,type,description FROM OBDErrorCode where pid = '" + Id + "'";
+        String query = "SELECT pid,type,description,symptom,cause,solution,related FROM OBDErrorCode where pid = '" + Id + "'";
 
         int iCount = 0;
         OBDErrorCode OBDErrorCode = new OBDErrorCode();
@@ -189,7 +189,6 @@ public class OBDErrorCodeManager {
         db.close();
         return OBDErrorCode_Id;
     }
-
     private int getLastOBDErrorCode() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT  " +

@@ -66,6 +66,7 @@
         <activity
             android:name=".Activities.ActivitySelectedChart"/>
         <activity android:name=".Activities.CheckFaultCodeMain" />
+        <activity android:name=".Activities.FaultCodesDetailActivty"/>
         <activity
             android:name=".Activities.ActivityGraphing"
             android:label="@string/app_name"

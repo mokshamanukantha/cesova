@@ -11,50 +11,48 @@ import android.widget.TextView;
 
 import com.android.cesova.R;
 import com.android.cesova.obd.ErrorCodes.OBDErrorCode;
-
-import java.util.List;
+import com.android.cesova.obd.ErrorCodes.OBDErrorCodeManager;
 
 public class CustomListAdapter extends BaseAdapter {
     private Activity activity;
-    private LayoutInflater inflater;
-    private List<OBDErrorCode> obdItems;
-
-    public CustomListAdapter(Activity activity, List<OBDErrorCode> obdItems) {
-        this.activity = activity;
+    private String[] obdItems;
+    private LayoutInflater obdInf;
+    OBDErrorCodeManager obdErrorCodeManager;
+    public CustomListAdapter(Context c, String[] obdItems) {
         this.obdItems = obdItems;
+        obdInf =LayoutInflater.from(c);
+        obdErrorCodeManager = new OBDErrorCodeManager(c);
     }
 
     @Override
     public int getCount() {
-        return obdItems.size();
+        return obdItems.length;
     }
 
     @Override
     public Object getItem(int location) {
-        return obdItems.get(location);
+        return obdItems[location];
     }
 
     @Override
     public long getItemId(int position) {
-        notifyDataSetChanged();
         return position;
 
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        if (inflater == null)
-            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.list_row, null);
+            convertView = obdInf.inflate(R.layout.list_row, null);
+        OBDErrorCode obdErrorCode = new OBDErrorCode();
+        obdErrorCode = obdErrorCodeManager.getOBDErrorCodeById(obdItems[position]);
         TextView pid = (TextView) convertView.findViewById(R.id.pid);
         TextView type = (TextView) convertView.findViewById(R.id.type);
         TextView description = (TextView) convertView.findViewById(R.id.description);
-        OBDErrorCode m = obdItems.get(position);
-        pid.setText(m.getPid());
-        type.setText("Type: " + String.valueOf(m.getType()));
-        description.setText(String.valueOf(m.getDescription()));
+        //Log.d("position", String.valueOf(position));
+        pid.setText(obdErrorCode.getPid());
+        type.setText("Type: " + String.valueOf(obdErrorCode.getType()));
+        description.setText(String.valueOf(obdErrorCode.getDescription()));
         return convertView;
     }
 
