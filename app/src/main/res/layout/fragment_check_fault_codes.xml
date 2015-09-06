@@ -10,7 +10,11 @@
         android:layout_height="wrap_content"
         android:text="Add"
         android:layout_weight="7"/>-->
-
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/ColorPrimary" />
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"

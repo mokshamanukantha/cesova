@@ -21,7 +21,7 @@ public class TimeRunWithMILObdCommand extends ObdCommand {
 
     @Override
     public String getFormattedResult() {
-        return String.format("%d%s", time, " Distance");
+        return String.format("%d%s", time, " Time");
     }
 
     @Override

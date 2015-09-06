@@ -1,8 +1,10 @@
 package com.android.cesova.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +13,7 @@ import android.widget.Button;
 import com.android.cesova.R;
 
 
-public class ActivitySelectGraph extends Activity {
+public class ActivitySelectGraph extends ActionBarActivity {
 
     private Button btnSelectAccGraph;
     private Button btnSelectVoltGraph;
@@ -25,6 +27,12 @@ public class ActivitySelectGraph extends Activity {
         btnSelectAccGraph = (Button) findViewById(R.id.accGraph);
         btnSelectVoltGraph = (Button) findViewById(R.id.button);
         btnGraphing = (Button) findViewById(R.id.graphing);
+
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitle("Real time Graphing");
+        setSupportActionBar(toolbar);
+        this.setSupportActionBar(toolbar);
 
         btnSelectAccGraph.setOnClickListener(new View.OnClickListener() {
             @Override

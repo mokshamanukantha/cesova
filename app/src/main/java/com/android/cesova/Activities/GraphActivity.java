@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -18,23 +19,38 @@ import com.android.cesova.obd.enums.AvailableCommandNames;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by mokshaDev on 5/8/2015.
- */
+
 public class GraphActivity extends ActionBarActivity implements View.OnClickListener {
-    Spinner source;
-    Spinner target;
+
+    private static final String TAG_ID="id";
+    private static final String TAG_INTERVAL="time_interval";
+    private static final String TAG_SRC="sourceX";
+    private static final String TAG_TARGET="targetY";
+
+
+    Spinner source; //X Axis
+    Spinner target; //Y Axis
     Spinner chartType;
     Spinner interval;
     Button btnStartGraph;
+
+    String selectedChartItem;
+    String selectedChartInterval;
+    String selectedChartSource;
+    String selectedChartTarget;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_layout);
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle("Graphing");
         setSupportActionBar(toolbar);
+
         source = (Spinner) findViewById(R.id.source);
         target = (Spinner) findViewById(R.id.target);
         chartType = (Spinner) findViewById(R.id.chartType);
@@ -62,7 +78,6 @@ public class GraphActivity extends ActionBarActivity implements View.OnClickList
         for(int i=0;i< sensors.length;i++) {
             categories.add(sensors[i].toString());
         }
-
         chartCategories.add("Line Chart");
         chartCategories.add("Scatter Chart");
 
@@ -71,7 +86,6 @@ public class GraphActivity extends ActionBarActivity implements View.OnClickList
         chartIntervals.add("1000");
         chartIntervals.add("2500");
         chartIntervals.add("5000");
-
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, categories);
         ArrayAdapter<String> chartAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, chartCategories);
@@ -85,9 +99,54 @@ public class GraphActivity extends ActionBarActivity implements View.OnClickList
         target.setAdapter(dataAdapter);
         chartType.setAdapter(chartAdapter);
         interval.setAdapter(intervalAdapter);
-
         btnStartGraph.setOnClickListener(this);
 
+
+
+        chartType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedChartItem = chartType.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+
+        interval.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedChartInterval = interval.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        source.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedChartSource = source.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        target.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedChartTarget = target.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
 
     @Override
@@ -115,6 +174,11 @@ public class GraphActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this,ActivitySelectedChart.class);
+        intent.putExtra(TAG_ID,selectedChartItem);
+        intent.putExtra(TAG_INTERVAL,selectedChartInterval);
+        intent.putExtra(TAG_SRC,selectedChartSource);
+        intent.putExtra(TAG_TARGET,selectedChartTarget);
         startActivity(intent);
     }
 }
+

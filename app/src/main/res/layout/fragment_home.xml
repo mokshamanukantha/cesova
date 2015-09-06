@@ -37,6 +37,17 @@
                     android:layout_height="match_parent"
                     android:gravity="center">
 
+
+
+                    <ImageView
+                        android:id="@+id/homemeter"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="20dp"
+                        android:src="@drawable/ps_speedometer_small"/>
+
                     <com.android.cesova.Gauges.CustomGauge
                         android:id="@+id/gauge1"
                         android:layout_width="300dp"
@@ -86,7 +97,7 @@
                 android:layout_gravity="center|bottom"
                 android:fontFamily="sans-serif-condensed"
                 android:paddingBottom="30dp"
-                android:text="Accelaration"
+                android:text="Accelaration \n x100r/min"
                 android:textColor="@color/White"
                 android:textSize="20dp"
                 android:textStyle="bold" />

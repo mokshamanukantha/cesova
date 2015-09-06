@@ -1,11 +1,14 @@
 package com.android.cesova.Activities;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothSocket;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.android.cesova.GlobalClass;
 import com.androidplot.Plot;
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.BoundaryMode;
@@ -25,12 +28,15 @@ public class ActivityDynamicGraphingVoltage extends Activity {
     private XYPlot dynamicPlot;
     private MyPlotUpdater plotUpdater;
     private Thread myThread;
+    GlobalClass globalClass;
+    BluetoothSocket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dynamicoltagegraph);
-
+        globalClass = (GlobalClass) getApplication();
+        socket = globalClass.getSocket();
         // get handles to the View defined in layout.xml:
         dynamicPlot = (XYPlot) findViewById(R.id.dynamicXYPlot);
 
@@ -88,7 +94,15 @@ public class ActivityDynamicGraphingVoltage extends Activity {
     public void onResume() {
 
         myThread = new Thread(data);
-        myThread.start();
+        if (socket != null) {
+            Toast toast = Toast.makeText(this, "connection successful", Toast.LENGTH_SHORT);
+            toast.show();
+            myThread.start();
+        } else {
+            Toast toast = Toast.makeText(this, "You are not connected to any device", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
         super.onResume();
     }
 

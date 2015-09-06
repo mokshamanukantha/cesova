@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -20,19 +22,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.cesova.Adapters.CustomDrawerAdapter;
+import com.android.cesova.Adapters.DrawerItem;
 import com.android.cesova.BluetoothConnector;
 import com.android.cesova.DeviceListActivity;
-import com.android.cesova.Fragments.CheckFaultCodesFragment;
-import com.android.cesova.Fragments.GraphingFragment;
 import com.android.cesova.Fragments.HelpFragment;
 import com.android.cesova.Fragments.HomeFragment;
-import com.android.cesova.Fragments.MapViewFragment;
 import com.android.cesova.Fragments.RealTimeInformationFragment;
 import com.android.cesova.Fragments.SettingsFragment;
 import com.android.cesova.Fragments.TestResultsFragment;
 import com.android.cesova.GlobalClass;
+import com.android.cesova.Map.DirectionsInputActivity;
 import com.android.cesova.R;
-import com.android.cesova.obd.commands.ObdCommand;
 import com.android.cesova.obd.commands.protocol.EchoOffObdCommand;
 import com.android.cesova.obd.commands.protocol.LineFeedOffObdCommand;
 import com.android.cesova.obd.commands.protocol.SelectProtocolObdCommand;
@@ -40,6 +41,8 @@ import com.android.cesova.obd.commands.protocol.TimeoutObdCommand;
 import com.android.cesova.obd.enums.ObdProtocols;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
     public static final String TAG = "MainActivity";
@@ -55,20 +58,18 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle drawerToggle;
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
-    private String[] leftSliderData = {"HOME", "REALTIME INFORMATION", "CHECK FAULT CODES", "GRAPHING", "MAP VIEW", "TEST RESULTS", "HELP", "SETTINGS", "SPEEDOMETER", "USER PROFILE", "COMPASS"};
+    private String[] leftSliderData = {"Home", "Help","Speedometer","LogBook","COMPASS","Settings"};
     private BluetoothAdapter mBluetoothAdapter = null;
     private HomeFragment fragmentHome;
     private RealTimeInformationFragment fragmentRealTimeInformation;
-    private CheckFaultCodesFragment fragmentCheckFaultCodes;
+    private CheckFaultCodesActivty fragmentCheckFaultCodes;
     private TestResultsFragment fragmentTestResults;
     private SettingsFragment fragmentSettings;
-    private MapViewFragment fragmentMapView;
-    private GraphingFragment fragmentGrphing;
     private HelpFragment fragmentHelp;
-
+    List<DrawerItem> dataList;
     private android.app.FragmentTransaction transaction;
     private FragmentManager manager;
-
+    CustomDrawerAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +101,8 @@ public class MainActivity extends ActionBarActivity {
         leftDrawerList = (ListView) findViewById(R.id.left_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        //navigationDrawerAdapter =new CustomDrawerAdapter(this, R.layout.custom_drawer_item,dataList);
         navigationDrawerAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, leftSliderData);
         leftDrawerList.setAdapter(navigationDrawerAdapter);
     }
@@ -148,24 +151,39 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.btConnect) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            return true;
+        }
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         switch (item.getItemId()) {
             case R.id.secure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+                }
                 Intent serverIntent = new Intent(this, DeviceListActivity.class);
                 startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+
                 return true;
             }
             case R.id.insecure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+                }
                 Intent serverIntent = new Intent(this, DeviceListActivity.class);
                 startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
                 return true;
             }
             case R.id.discoverable: {
-                // Ensure this device is discoverable by others
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+                }
                 ensureDiscoverable();
                 return true;
             }
@@ -177,8 +195,8 @@ public class MainActivity extends ActionBarActivity {
     public void onStart() {
         super.onStart();
         if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            //Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            //startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         }
     }
 
@@ -254,30 +272,9 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void executeCommands(ObdCommand command) throws InterruptedException {
-        while (!Thread.currentThread().isInterrupted()) {
-            try {
-                command.run(socket.getInputStream(), socket.getOutputStream());
-                Log.d("rpm", command.getFormattedResult());
-                setStatus("" + command.getFormattedResult() + "rpm");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    private void setStatus(int resId) {
-        if (null == this) {
-            return;
-        }
-        final android.support.v7.app.ActionBar actionBar = MainActivity.this.getSupportActionBar();
-        if (null == actionBar) {
-            return;
-        }
-        actionBar.setSubtitle(resId);
-    }
+
+
 
     private void setStatus(CharSequence subTitle) {
         if (null == this) {
@@ -302,12 +299,14 @@ public class MainActivity extends ActionBarActivity {
             drawerLayout.closeDrawers();
 
         } else if (position == 1) {
-            manager = getFragmentManager();
+            /*manager = getFragmentManager();
             transaction = manager.beginTransaction();
             fragmentRealTimeInformation = new RealTimeInformationFragment();
             transaction.addToBackStack(String.valueOf(fragmentRealTimeInformation));
             transaction.replace(R.id.content_frame, fragmentRealTimeInformation);
-            transaction.commit();
+            transaction.commit();*/
+            Intent i = new Intent(this, RealTimeInformationFragment.class);
+            startActivity(i);
         } else if (position == 2) {
             Intent i = new Intent(this, CheckFaultCodeMain.class);
             startActivity(i);
@@ -315,7 +314,7 @@ public class MainActivity extends ActionBarActivity {
             Intent i = new Intent(this, ActivitySelectGraph.class);
             startActivity(i);
         } else if (position == 4) {
-            Intent i = new Intent(this, MapActivity.class);
+            Intent i = new Intent(this, DirectionsInputActivity.class);
             startActivity(i);
         } else if (position == 5) {
             manager = getFragmentManager();
@@ -342,8 +341,9 @@ public class MainActivity extends ActionBarActivity {
             Intent i = new Intent(this, Speedometer.class);
             startActivity(i);
         } else if (position == 9) {
-            Intent i = new Intent(this, Main_Screen.class);
-            startActivity(i);
+            //Intent i = new Intent(this, Main_Screen.class);
+            //startActivity(i);
+            openApp(this, "com.enadein.carlogbook");
         } else if (position == 10) {
             Intent i = new Intent(this, Compass.class);
             startActivity(i);
@@ -364,7 +364,36 @@ public class MainActivity extends ActionBarActivity {
     private class DrawerItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            changeLayout(position);
+            if(position==0) {
+                changeLayout(0);
+            }
+            if(position==1) {
+                changeLayout(6);
+            }
+            if(position==2) {
+                changeLayout(11);
+            }
+            if(position==3) {
+                changeLayout(9);
+            }
+            if(position==4) {
+                changeLayout(10);
+            }
+            if(position==5) {
+                changeLayout(7);
+            }
         }
+    }
+
+    public static boolean openApp(Context context, String packageName) {
+        PackageManager manager = context.getPackageManager();
+        Intent i = manager.getLaunchIntentForPackage(packageName);
+        if (i == null) {
+            return false;
+            //throw new PackageManager.NameNotFoundException();
+        }
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        context.startActivity(i);
+        return true;
     }
 }

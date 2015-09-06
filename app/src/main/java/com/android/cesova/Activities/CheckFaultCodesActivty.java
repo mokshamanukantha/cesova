@@ -1,23 +1,25 @@
-package com.android.cesova.Fragments;
+package com.android.cesova.Activities;
 
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.cesova.Activities.FaultCodesDetailActivty;
 import com.android.cesova.Adapters.CustomListAdapter;
 import com.android.cesova.GlobalClass;
 import com.android.cesova.R;
+import com.android.cesova.obd.ErrorCodes.DatabaseRecords;
 import com.android.cesova.obd.commands.control.TroubleCodesObdCommand;
+import com.android.cesova.obd.commands.protocol.ObdResetCommand;
 import com.android.cesova.obd.exceptions.NoDataException;
 
 import java.io.IOException;
@@ -25,7 +27,7 @@ import java.io.IOException;
 /**
  * Created by mokshaDev on 3/21/2015.
  */
-public class CheckFaultCodesFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class CheckFaultCodesActivty extends ActionBarActivity implements AdapterView.OnItemClickListener {
     private static final String TAG_PID="pid";
     GlobalClass globalClass;
     BluetoothSocket socket;
@@ -35,33 +37,33 @@ public class CheckFaultCodesFragment extends Fragment implements AdapterView.OnI
     private CustomListAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_check_fault_codes, container, false);
-        globalClass = (GlobalClass) getActivity().getApplication();
-        btnClearFaultCodes = (Button) rootView.findViewById(R.id.btnClearFaultsCode);
-        listView = (ListView) rootView.findViewById(R.id.list);
-        pDialog = new ProgressDialog(getActivity());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_check_fault_codes);
+        globalClass = (GlobalClass) this.getApplication();
+
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitle("Check Fault Codes");
+        setSupportActionBar(toolbar);
+        this.setSupportActionBar(toolbar);
+
+        btnClearFaultCodes = (Button) findViewById(R.id.btnClearFaultsCode);
+        listView = (ListView) findViewById(R.id.list);
+        pDialog = new ProgressDialog(this);
         pDialog.setMessage("Checking...");
         pDialog.show();
-        //OBDErrorCodeManager obdErrorCodeManager = new OBDErrorCodeManager(getActivity());
-        //DatabaseRecords databaseRecords = new DatabaseRecords(getActivity());
+        //DatabaseRecords databaseRecords = new DatabaseRecords(this);
         //databaseRecords.insert();
         socket = globalClass.getSocket();
-        return rootView;
-    }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         if (socket != null) {
-            Toast toast = Toast.makeText(getActivity(), "connection successfull", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "connection successfull", Toast.LENGTH_SHORT);
             toast.show();
-            adapter = new CustomListAdapter(getActivity(),getDataForListView());
-            listView.setAdapter(adapter);
+            getDataForListView();
             hidePDialog();
         } else {
-            Toast toast = Toast.makeText(getActivity(), "You are not connected to any device", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "You are not connected to any device", Toast.LENGTH_SHORT);
             toast.show();
         }
         btnClearFaultCodes.setOnClickListener(new View.OnClickListener() {
@@ -93,10 +95,16 @@ public class CheckFaultCodesFragment extends Fragment implements AdapterView.OnI
         }
     }
 
-    public String[] getDataForListView() {
-        TroubleCodesObdCommand tr = new TroubleCodesObdCommand();
+    public void getDataForListView() {
+        ObdResetCommand obdResetCommand = new ObdResetCommand();
+        TroubleCodesObdCommand tr = new TroubleCodesObdCommand(0);
+        String[] arr;
         try {
+            obdResetCommand.run(socket.getInputStream(), socket.getOutputStream());
             tr.run(socket.getInputStream(), socket.getOutputStream());
+            arr = tr.getFormattedResult().split("\n");
+            adapter = new CustomListAdapter(this,arr);
+            listView.setAdapter(adapter);
         }
         catch (NoDataException e)
         {
@@ -107,16 +115,14 @@ public class CheckFaultCodesFragment extends Fragment implements AdapterView.OnI
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        String[] arr = tr.getFormattedResult().split("\n");
-        return arr;
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        String[] obdCodes = getDataForListView();
-        Intent intent = new Intent(getActivity(), FaultCodesDetailActivty.class);
-        intent.putExtra(TAG_PID,obdCodes[i]);
+        Intent intent = new Intent(this, FaultCodesDetailActivty.class);
+        TextView textView = (TextView) view.findViewById(R.id.pid);
+        intent.putExtra(TAG_PID,textView.getText().toString());
         startActivity(intent);
     }
 }
